@@ -1,7 +1,8 @@
-version: "3"
+version: "3.8"
 
 services:
   web1:
+    container_name: php
     build: .
     ports:
       - "8081:80"
@@ -10,16 +11,20 @@ services:
     networks:
       - symfony_app
 
-  db:
+  database:
     platform: linux/x86_64
     image: mysql:8
-    networks:
-      - symfony_app
     environment:
       MYSQL_DATABASE: symfony
       MYSQL_USER: user
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - symfony_app
+    volumes:
+      - ./docker/database:/var/lib/mysql
 
   cache:
     image: redis:7.2.4
@@ -32,3 +37,5 @@ networks:
   symfony_app:
     driver: bridge
 
+volumes:
+  database:

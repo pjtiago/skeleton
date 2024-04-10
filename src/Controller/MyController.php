@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,6 +34,25 @@ class MyController
         return new JsonResponse(
             [
                 'number' => $number
+            ]
+        );
+    }
+
+    #[Route('/user', name: 'create_user')]
+    public function createProduct(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = new User();
+        $user->setName(base64_encode(random_bytes(10)))
+            ->setEmail(base64_encode(random_bytes(10)))
+            ->setActive(1);
+
+        $entityManager->persist($user);
+
+        $entityManager->flush();
+
+        return new JsonResponse(
+            [
+                'Success' => 'Saved new product with id ' . $user->getId()
             ]
         );
     }

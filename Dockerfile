@@ -12,6 +12,8 @@ WORKDIR /var/www/app
 
 COPY . /var/www/app
 
+#RUN php bin/console doctrine:migrations:migrate
+
 COPY 000-default.conf /etc/apache2/sites-available
 
 #RUN chown -R www-data:www-data /var/www/app \
