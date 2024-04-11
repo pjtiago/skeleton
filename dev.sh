@@ -10,6 +10,10 @@ stop() {
     docker-compose down
 }
 
+start () {
+    docker-compose up $1
+}
+
 reload() {
     docker-compose stop
     docker-compose up $1

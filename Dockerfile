@@ -27,4 +27,6 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-scripts --no-autoloader
 
 EXPOSE 80
 
+#CMD ["/var/www/app/entrypoint.sh", "apache2-foreground"]
+
 CMD ["apache2-foreground"]
