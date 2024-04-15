@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +16,16 @@ class MyController
     public function __construct(CacheInterface $cache)
     {
         $this->cache = $cache;
+    }
+
+    #[Route('/random_number', name: 'rand')]
+    public function randomNumber(): JsonResponse
+    {
+        return new JsonResponse(
+            [
+                'number' =>  random_int(0, 5)
+            ]
+        );
     }
 
     #[Route('/randomNumber', name: 'random_number')]
